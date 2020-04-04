@@ -1,8 +1,8 @@
 /*	Author: Quinn Leader qlead001@ucr.edu
  *      Partner(s) Name: NA
  *	Lab Section: 026
- *	Assignment: Lab 2  Exercise 3
- *	Exercise Description: Parking space counter with full lot detection
+ *	Assignment: Lab 2  Exercise 4
+ *	Exercise Description: Amusement park ride weight detection
  *
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
@@ -15,18 +15,33 @@
 int main(void) {
     /* Insert DDR and PORT initializations */
     DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-    DDRC = 0xFF; PORTC = 0x00; // Configure port C's 8 pins as outputs, initialize to 0s
+    DDRB = 0x00; PORTB = 0xFF; // Configure port B's 8 pins as inputs
+    DDRC = 0x00; PORTC = 0xFF; // Configure port C's 8 pins as inputs
+    DDRD = 0xFF; PORTD = 0x00; // Configure port D's 8 pins as outputs, initialize to 0s
 
     /* Insert your solution below */
     unsigned char tmpA = 0x00; // Temporary variable to hold the value of A
-    unsigned char cntavail = 0x00; // Temporary variable to hold the value of space count
+    unsigned char tmpB = 0x00; // Temporary variable to hold the value of B
+    unsigned char tmpC = 0x00; // Temporary variable to hold the value of C
+    unsigned char totalDiv2 = 0x00;
+    unsigned char diffAC = 0x00;
+    unsigned char out = 0x00;
     while (1) {
         // 1) Read input
-        tmpA = PINA & 0x0F;
+        tmpA = PINA; tmpB = PINB; tmpC = PINC;
         // 2) Perform computation
-        cntavail = !(tmpA & 0x01) + !(tmpA & 0x02) + !(tmpA & 0x04) + !(tmpA & 0x08);
+        // Calculate total weight divided by 2
+        totalDiv2 = tmpA>>1 + tmpB>>1 + tmpC>>1;
+        // Find the difference between A and C
+        diffAC = (tmpA > tmpC)?tmpA-tmpC:tmpC-tmpA;
+        // Check if sum exceeds 140kg
+        out = (totalDiv2 > 70);
+        // Check if A and C differ by more than 80kg
+        out = out + (diffAC > 80)<<1;
+        // PD[7:2] is total weight divided by 4
+        out = out + (totalDiv2>>1)<<2;
         // 3) Write output
-        PORTC = cntavail | ((tmpA == 0x0F) << 7); // PC7 = 1 if full
+        PORTC = out;
     }
     return 1;
 }
