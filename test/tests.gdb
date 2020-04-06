@@ -40,44 +40,44 @@ echo Running all tests..."\n\n
 #checkResult
 
 # Add tests below
-test "PINA: 20, PINB: 50, PINC: 70, PORTD[7:2]: 8, PORTD[1:0]: 00"
+test "PINA: 20, PINB: 50, PINC: 70, PORTD[7:2]: 11, PORTD[1:0]: 00"
 setPINA 20
 setPINB 50
 setPINC 70
 continue 2
-expectPORTD 0x20
+expectPORTD 0x2C
 checkResult
 
-test "PINA: 255, PINB: 255, PINC: 255, PORTD[7:2]: 47, PORTD[1:0]: 01"
+test "PINA: 255, PINB: 255, PINC: 255, PORTD[7:2]: 63, PORTD[1:0]: 01"
 setPINA 255
 setPINB 255
 setPINC 255
 continue 2
-expectPORTD 0xBD
+expectPORTD 0xFD
 checkResult
 
-test "PINA: 110, PINB: 10, PINC: 10, PORTD[7:2]: 32, PORTD[1:0]: 10"
+test "PINA: 110, PINB: 10, PINC: 10, PORTD[7:2]: 10, PORTD[1:0]: 10"
 setPINA 110
 setPINB 10
 setPINC 10
 continue 2
-expectPORTD 0x22
+expectPORTD 0x2A
 checkResult
 
-test "PINA: 10, PINB: 10, PINC: 110, PORTD[7:2]: 32, PORTD[1:0]: 10"
+test "PINA: 10, PINB: 10, PINC: 110, PORTD[7:2]: 10, PORTD[1:0]: 10"
 setPINA 10
 setPINB 10
 setPINC 110
 continue 2
-expectPORTD 0x22
+expectPORTD 0x2A
 checkResult
 
-test "PINA: 110, PINB: 90, PINC: 10, PORTD[7:2]: 13, PORTD[1:0]: 11"
+test "PINA: 110, PINB: 90, PINC: 10, PORTD[7:2]: 17, PORTD[1:0]: 11"
 setPINA 110
 setPINB 90
 setPINC 10
 continue 2
-expectPORTD 0x37
+expectPORTD 0x47
 checkResult
 
 # Report on how many tests passed/tests ran

@@ -39,7 +39,7 @@ int main(void) {
         // Check if A and C differ by more than 80kg
         out = out | ((diffAC > 80) << 1);
         // PD[7:2] is total weight divided by 16
-        out = out | ((total >> 4) << 2);
+        out = out | ((total / 12) << 2);
         // 3) Write output
         PORTD = out;
     }
